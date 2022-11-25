@@ -9,7 +9,7 @@ import {
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import * as constants from '../../../utils/constants/constants';
-import FormularioUsuario from '../page/formulario-usuario'
+import FormularioUsuario from '../page/formulario-usuario';
 
 function EditarUsuario(props) {
 
@@ -67,6 +67,8 @@ function EditarUsuario(props) {
                     usuario={props.usuario}
                     salvarUsuario={salvarUsuario} 
                     handleExibirTabela={props.handleExibirTabela}
+                    carregarUsuario={props.carregarUsuario} 
+                    setCarregarUsuario={props.setCarregarUsuario}
                     />
             </Card>
             <Modal 

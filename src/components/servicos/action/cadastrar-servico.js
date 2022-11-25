@@ -14,25 +14,20 @@ import Servico from '../../../models/servico.model';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import * as constants from '../../../utils/constants/constants';
+import FormularioServico from '../page/formulario-servico';
 
 function CadastrarServico(props) {
 
     const URL_CADASTRAR = constants.URL_BASE + constants.SERVICO;
 
-    const [descricao, setDescricao] = useState('');
-    const [detalhe, setDetalhe] = useState('');
-    const [tempo, setTempo] = useState('');
-    const [valor, setValor] = useState('');
     const [exibirModalSucesso, setExibirModalSucesso] = useState(false);
     const [exibirModalErro, setExibirModalErro] = useState(false);
     const [messagem, setMessagem] = useState('');
 
-    async function salvarServico(event){
+    async function salvarServico(servico){
         try {
-            event.preventDefault();
-            const novoServico = new Servico(descricao, detalhe);
             const formData = new FormData();
-            formData.append('data', JSON.stringify(novoServico));
+            formData.append('data', JSON.stringify(servico));
             formData.append('method', 'post');
             let { data } = await axios.post(URL_CADASTRAR, formData);
             if(data.status==='success'){
@@ -50,22 +45,6 @@ function CadastrarServico(props) {
 
     function visivel() {
         return props.visivel ? 'mt-3' : 'hidden';
-    }
-
-    function handleDescricao(event){
-        setDescricao(event.target.value);
-    }
-
-    function handleDetalhe(event){
-        setDetalhe(event.target.value);
-    }
-
-    function handleTempo(event){
-        setTempo(event.target.value.replace(/\D/g, ''));
-    }
-
-    function handleValor(event){
-        setValor(event.target.value);
     }
 
     function handleFecharModalSucesso(){
@@ -89,110 +68,13 @@ function CadastrarServico(props) {
                         Cadastrar Serviço
                     </h2>
                 </Card.Header>
-                <Card.Body>
-                    <Container >
-                        <Form 
-                            onSubmit={salvarServico}>
-                            <Form.Group
-                                as={Row}>
-                                <Form.Label
-                                        column
-                                        md={2}>
-                                    Id:
-                                </Form.Label>
-                            </Form.Group>
-                            <Form.Group
-                                as={Row}
-                                className="mt-2">
-                                <Form.Label
-                                        column
-                                        md={2}>
-                                    Descricao:
-                                </Form.Label>
-                                <Col 
-                                    md={6}>
-                                    <Form.Control
-                                        type="text"
-                                        value={descricao} 
-                                        onChange={handleDescricao}
-                                        required />
-                                </Col>
-                            </Form.Group>
-                            <Form.Group
-                                as={Row}
-                                className="mt-2">
-                                <Form.Label
-                                        column
-                                        md={2}>
-                                    Detalhes:
-                                </Form.Label>
-                                <Col 
-                                    md={10}>
-                                    <Form.Control
-                                        as="textarea" 
-                                        rows={10}
-                                        value={detalhe} 
-                                        onChange={handleDetalhe}
-                                        required />
-                                </Col>
-                            </Form.Group>
-                            <Form.Group
-                                as={Row}
-                                className="mt-2">
-                                <Form.Label
-                                        column
-                                        md={2}>
-                                    Tempo:
-                                </Form.Label>
-                                <Col 
-                                    md={4}>
-                                    <Form.Control
-                                        type="text"
-                                        value={tempo} 
-                                        onChange={handleTempo}
-                                        required />
-                                </Col>
-                            </Form.Group>
-                            <Form.Group
-                                as={Row}
-                                className="mt-2">
-                                <Form.Label
-                                        column
-                                        md={2}>
-                                    Valor:
-                                </Form.Label>
-                                <Col 
-                                    md={4}>
-                                    <Form.Control
-                                        type="text"
-                                        value={valor} 
-                                        onChange={handleValor}
-                                        required />
-                                </Col>
-                            </Form.Group>
-                            <Form.Group 
-                                as={Row} 
-                                className="mt-3">
-                                <Col 
-                                    className="text-end">
-                                    <Button 
-                                        variant="danger"
-                                        onClick={props.handleExibirTabela} >
-                                        Cancelar
-                                    </Button>
-                                </Col>
-                                <Col 
-                                    className="text-start">
-                                    <Button 
-                                        variant="primary" 
-                                        type="submit">
-                                        Salvar
-                                    </Button>
-                                </Col>
-                            </Form.Group>
-                        </Form>
-                    </Container>
-                </Card.Body>
+                <FormularioServico 
+                    servico={new Servico('', '', '', '', '60', 'R$ 0,00')}
+                    salvarServico={salvarServico} 
+                    handleExibirTabela={props.handleExibirTabela}
+                    carregarServico={props.carregarServico} 
+                    setCarregarServico={props.setCarregarServico}
+                    />
             </Card>
             <Modal 
                 show={exibirModalSucesso} 
@@ -241,6 +123,8 @@ CadastrarServico.propTypes = {
     visivel: PropTypes.bool.isRequired,
     handleExibirTabela: PropTypes.func.isRequired,
     setRecarregarServicos: PropTypes.func.isRequired,
+    carregarServico: PropTypes.bool.isRequired,
+    setCarregarServico: PropTypes.func.isRequired,
 }
 
 export default CadastrarServico;

@@ -1,5 +1,6 @@
-function Servico(descricao, detalhe, estado, tempo, valor){
+function Servico(id, descricao, detalhe, estado, tempo, valor){
 
+    this.id = id;
     this.descricao = descricao;
     this.detalhe = detalhe;
     this.estado = estado;

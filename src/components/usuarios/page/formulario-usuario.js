@@ -127,6 +127,8 @@ FormularioUsuario.propTypes = {
     usuario: PropTypes.object.isRequired,
     salvarUsuario: PropTypes.func.isRequired,
     handleExibirTabela: PropTypes.func.isRequired,
+    carregarUsuario: PropTypes.bool.isRequired,
+    setCarregarUsuario: PropTypes.func.isRequired,
 }
 
 export default FormularioUsuario;

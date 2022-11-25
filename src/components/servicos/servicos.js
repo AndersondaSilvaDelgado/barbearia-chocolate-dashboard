@@ -19,7 +19,7 @@ import * as constants from '../../utils/constants/constants';
 
 function Servicos() {
 
-    const API_URL_LISTAR_USUARIOS = constants.URL_BASE + constants.SERVICO;
+    const URL_LISTAR_SERVICOS = constants.URL_BASE + constants.SERVICO;
 
     const [exibirTabela, setExibirTabela] = useState(true);
     const [exibirEditar, setExibirEditar] = useState(false);
@@ -51,7 +51,7 @@ function Servicos() {
                     ordem = 'nome DESC';
                 } 
                 const params = `?page=${paginaAtual}&countpage=${countPage}&order=${ordem}&filter=${filtro}`;
-                let { data } = await axios.get(API_URL_LISTAR_USUARIOS + params);
+                let { data } = await axios.get(URL_LISTAR_SERVICOS + params);
                 if(data.status==='success'){
                     setServicos(data.data);
                     setTotalItems(parseInt(data.count));
@@ -82,6 +82,7 @@ function Servicos() {
         setExibirCadastrar(true);
         setExibirTabela(false);
         setExibirEditar(false);
+        setCarregarServico(true);
     }
 
     function handleExibirEditar(servico){
@@ -126,7 +127,9 @@ function Servicos() {
                         <CadastrarServico
                             visivel={exibirCadastrar}
                             handleExibirTabela={handleExibirTabela}
-                            setRecarregarServicos={setCarregarServicos}/>
+                            setRecarregarServicos={setCarregarServicos}
+                            carregarServico={carregarServico} 
+                            setCarregarServico={setCarregarServico}/>
                         <EditarServico
                             visivel={exibirEditar}
                             handleExibirTabela={handleExibirTabela}

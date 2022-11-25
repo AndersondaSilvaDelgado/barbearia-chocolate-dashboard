@@ -13,7 +13,7 @@ import * as constants from '../../../utils/constants/constants';
 
 function RemoverUsuario(props) {
 
-    const API_URL_REMOVER_USUARIO = constants.URL_BASE + constants.USUARIO;
+    const URL_REMOVER_USUARIO = constants.URL_BASE + constants.USUARIO;
 
     const [exibirModal, setExibirModal] = useState(false);
     const [exibirModalSucesso, setExibirModalSucesso] = useState(false);
@@ -42,7 +42,7 @@ function RemoverUsuario(props) {
     async function handleRemoverUsuario(event){
         event.preventDefault();
         try {
-            let { data } = await axios.delete(API_URL_REMOVER_USUARIO + '/' + props.usuario.id);
+            let { data } = await axios.delete(URL_REMOVER_USUARIO + '/' + props.usuario.id);
             setExibirModal(false);
             if(data.status==='success'){
                 setMessagem(data.response);

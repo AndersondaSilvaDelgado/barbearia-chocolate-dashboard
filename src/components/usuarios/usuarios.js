@@ -19,7 +19,7 @@ import * as constants from '../../utils/constants/constants';
 
 function Usuarios() {
 
-    const API_URL_LISTAR_USUARIOS = constants.URL_BASE + constants.USUARIO;
+    const URL_LISTAR_USUARIOS = constants.URL_BASE + constants.USUARIO;
 
     const [exibirTabela, setExibirTabela] = useState(true);
     const [exibirEditar, setExibirEditar] = useState(false);
@@ -51,7 +51,7 @@ function Usuarios() {
                     ordem = 'nome DESC';
                 } 
                 const params = `?page=${paginaAtual}&countpage=${countPage}&order=${ordem}&filter=${filtro}`;
-                let { data } = await axios.get(API_URL_LISTAR_USUARIOS + params);
+                let { data } = await axios.get(URL_LISTAR_USUARIOS + params);
                 if(data.status==='success'){
                     setUsuarios(data.data);
                     setTotalItems(parseInt(data.count));
@@ -79,6 +79,7 @@ function Usuarios() {
     }
 
     function handleExibirCadastrar(){
+        setCarregarUsuario(true);
         setExibirCadastrar(true);
         setExibirTabela(false);
         setExibirEditar(false);
@@ -126,7 +127,9 @@ function Usuarios() {
                         <CadastrarUsuario
                             visivel={exibirCadastrar}
                             handleExibirTabela={handleExibirTabela}
-                            setRecarregarUsuarios={setCarregarUsuarios}/>
+                            setRecarregarUsuarios={setCarregarUsuarios}
+                            carregarUsuario={carregarUsuario} 
+                            setCarregarUsuario={setCarregarUsuario}/>
                         <EditarUsuario
                             visivel={exibirEditar}
                             handleExibirTabela={handleExibirTabela}

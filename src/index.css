@@ -4,3 +4,6 @@
 ul{list-style: none;}
 li{list-style: none;}
 a{text-decoration: none !important; color: #000 !important;}
+.dia-selecionado{
+  color: red;
+}

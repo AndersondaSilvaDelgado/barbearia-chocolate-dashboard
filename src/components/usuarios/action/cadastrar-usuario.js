@@ -4,17 +4,13 @@ import {
 import { 
     Card,
     Button,
-    Container,
-    Row,
-    Col,
-    Form,
     Modal
 } from 'react-bootstrap';
 import Usuario from '../../../models/usuario.model';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import * as constants from '../../../utils/constants/constants';
-import FormularioUsuario from '../page/formulario-usuario'
+import FormularioUsuario from '../page/formulario-usuario';
 
 function CadastrarUsuario(props) {
 
@@ -72,6 +68,8 @@ function CadastrarUsuario(props) {
                     usuario={new Usuario('', '', '')}
                     salvarUsuario={salvarUsuario} 
                     handleExibirTabela={props.handleExibirTabela}
+                    carregarUsuario={props.carregarUsuario} 
+                    setCarregarUsuario={props.setCarregarUsuario}
                     />
             </Card>
             <Modal 
@@ -113,7 +111,6 @@ function CadastrarUsuario(props) {
                 </Modal.Footer>
             </Modal>
         </div>
-        
      );
 }
 
@@ -121,6 +118,8 @@ CadastrarUsuario.propTypes = {
     visivel: PropTypes.bool.isRequired,
     handleExibirTabela: PropTypes.func.isRequired,
     setRecarregarUsuarios: PropTypes.func.isRequired,
+    carregarUsuario: PropTypes.bool.isRequired,
+    setCarregarUsuario: PropTypes.func.isRequired,
 }
 
 export default CadastrarUsuario;

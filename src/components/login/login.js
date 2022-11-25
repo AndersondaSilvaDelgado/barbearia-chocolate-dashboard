@@ -40,7 +40,6 @@ function Login(props) {
                 setExibirModalErro(true);
             }
         } catch (err) {
-            console.log('aki 2');
             setExibirModalErro(true);
         }
     }

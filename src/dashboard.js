@@ -12,6 +12,7 @@ import Login from './components/login/login';
 import Agenda from './components/agenda/agenda';
 import Usuarios from './components/usuarios/usuarios';
 import Servicos from './components/servicos/servicos';
+import Horarios from './components/horarios/horarios';
 
 function Dashboard() {
 
@@ -35,10 +36,10 @@ function Dashboard() {
   }
 
   return (
-    // <BrowserRouter basename="/dashboard">
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Agenda />} exact />
+        <Route path="/horarios" element={<Horarios />} exact />
         <Route path="/usuarios" element={<Usuarios />} exact />
         <Route path="/servicos" element={<Servicos />} exact />
       </Routes>

@@ -1,56 +1,31 @@
 import {
     useState,
-    useEffect,
 } from 'react';
 import { 
     Card,
     Button,
-    Container,
-    Row,
-    Col,
-    Form,
     Modal,
-    Image
 } from 'react-bootstrap';
 import Servico from '../../../models/servico.model';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import * as constant from '../../../utils/constants/constants';
+import FormularioServico from '../page/formulario-servico';
 
 function EditarServico(props) {
 
     const URL_EDITAR = constant.URL_BASE + constant.SERVICO;
 
-    const [id, setId] = useState('');
-    const [descricao, setDescricao] = useState('');
-    const [detalhe, setDetalhe] = useState('');
     const [exibirModalSucesso, setExibirModalSucesso] = useState(false);
     const [exibirModalErro, setExibirModalErro] = useState(false);
     const [messagem, setMessagem] = useState('');
 
-    useEffect(() => {
-
-        function obterServico(){
-            setId(props.servico.id);
-            setDescricao(props.servico.descricao);
-            setDetalhe(props.servico.detalhe);
-        }
-
-        if(props.carregarServico){
-            obterServico();
-            props.setCarregarServico(false);
-        }
-    }, [props.carregarServico]);
-
-
-    async function salvarServico(event){
+    async function salvarServico(servico){
         try {
-            event.preventDefault();
-            const novoServico = new Servico(descricao, detalhe);
             const formData = new FormData();
-            formData.append('data', JSON.stringify(novoServico));
+            formData.append('data', JSON.stringify(servico));
             formData.append('method', 'put');
-            let { data } = await axios.post(URL_EDITAR + '/' + id, formData);
+            let { data } = await axios.post(URL_EDITAR + '/' + servico.id, formData);
             if(data.status==='success'){
                 setMessagem(data.response);
                 setExibirModalSucesso(true);
@@ -66,14 +41,6 @@ function EditarServico(props) {
 
     function visivel() {
         return props.visivel ? 'mt-3' : 'hidden';
-    }
-
-    function handleDescricao(event){
-        setDescricao(event.target.value);
-    }
-
-    function handleDetalhe(event){
-        setDetalhe(event.target.value);
     }
 
     function handleFecharModalSucesso(){
@@ -97,77 +64,13 @@ function EditarServico(props) {
                         Editar Servico
                     </h2>
                 </Card.Header>
-                <Card.Body>
-                    <Container >
-                        <Form 
-                            onSubmit={salvarServico}>
-                            <Form.Group
-                                as={Row}>
-                                <Form.Label
-                                        column
-                                        md={2}>
-                                    Id: {id}
-                                </Form.Label>
-                            </Form.Group>
-                            <Form.Group
-                                as={Row}
-                                className="mt-2">
-                                <Form.Label
-                                        column
-                                        md={2}>
-                                    Descricao:
-                                </Form.Label>
-                                <Col 
-                                    md={10}>
-                                    <Form.Control
-                                        type="text"
-                                        value={descricao} 
-                                        onChange={handleDescricao}
-                                        required />
-                                </Col>
-                            </Form.Group>
-                            <Form.Group
-                                as={Row}
-                                className="mt-2">
-                                <Form.Label
-                                        column
-                                        md={2}>
-                                    Detalhe:
-                                </Form.Label>
-                                <Col 
-                                    md={10}>
-                                    <Form.Control
-                                        type="text"
-                                        value={detalhe} 
-                                        onChange={handleDetalhe}
-                                        required />
-                                </Col>
-                            </Form.Group>
-                            <Form.Group 
-                                as={Row} 
-                                className="mt-3">
-                                <Col 
-                                    className="text-end"
-                                    md={6}>
-                                    <Button 
-                                        variant="danger"
-                                        onClick={props.handleExibirTabela} >
-                                        Cancelar
-                                    </Button>
-                                </Col>
-                                <Col 
-                                    className="text-start"
-                                    md={6}>
-                                    <Button 
-                                        variant="primary" 
-                                        type="submit">
-                                        Salvar
-                                    </Button>
-                                </Col>
-                            </Form.Group>
-                        </Form>
-                    </Container>
-                </Card.Body>
+                <FormularioServico 
+                    servico={new Servico('', '', '', '', '')}
+                    salvarServico={salvarServico} 
+                    handleExibirTabela={props.handleExibirTabela}
+                    carregarServico={props.carregarServico} 
+                    setCarregarServico={props.setCarregarServico}
+                    />
             </Card>
             <Modal 
                 show={exibirModalSucesso} 
