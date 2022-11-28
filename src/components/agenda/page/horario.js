@@ -22,7 +22,7 @@ function Horario(props) {
                             <Form.Label
                                     column
                                     md={3}>
-                                        9:00 - 9:30
+                                        7:00 - 7:30
                             </Form.Label>
                             <Form.Label
                                     column
