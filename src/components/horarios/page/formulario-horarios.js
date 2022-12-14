@@ -77,21 +77,21 @@ function FormularioHorarios(props) {
             }
         }
 
-        function adIntervalos(){
+        function addIntervalos(){
             intervalos.push(new Horario((intervalos.length + 1), '', horarioInicialIntervalo, horarioFinalIntervalo));
         }
 
-        function reIntervalos(){
+        function remIntervalos(){
             setIntervalos(intervalos.filter(horario => horario.id !== idRemover));
         }
 
         if(adicionarIntervalos){
-            adIntervalos();
+            addIntervalos();
             setAdicionarIntervalos(false);
         }
 
         if(removerIntervalos){
-            reIntervalos();
+            remIntervalos();
             setRemoverIntervalos(false);
         }
 
