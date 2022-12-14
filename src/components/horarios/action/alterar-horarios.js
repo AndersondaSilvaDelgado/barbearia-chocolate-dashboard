@@ -24,10 +24,7 @@ function AlterarHorarios(props) {
         try {
             const formData = new FormData();
             formData.append('data', JSON.stringify(horario));
-            console.log(JSON.stringify(horario));
             formData.append('intervalos', JSON.stringify(intervalos));
-            console.log(JSON.stringify(horario));
-            console.log(JSON.stringify(intervalos));
             formData.append('method', 'post');
             let { data } = await axios.post(URL_SALVAR, formData);
             console.log(data);

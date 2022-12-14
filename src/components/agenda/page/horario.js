@@ -10,7 +10,11 @@ import PropTypes from 'prop-types';
 
 function Horario(props) {
 
-    function gerarLinhaHorarios(linha){
+    function retornoHorario(horario){
+        return parseFloat(horario).toFixed(2).replace(".50", ":30").replace(".00", ":00");
+    }
+
+    function gerarLinhaHorarios(linha, horarioInicial, horarioFinal){
         return (
             <Card 
                 key={linha}
@@ -22,12 +26,12 @@ function Horario(props) {
                             <Form.Label
                                     column
                                     md={3}>
-                                        7:00 - 7:30
+                                        {retornoHorario(horarioInicial)} - {retornoHorario(horarioFinal)}
                             </Form.Label>
                             <Form.Label
                                     column
                                     md={9}>
-                                        Anderson
+                                        -
                             </Form.Label>
                         </Form.Group>
                         <Form.Group
@@ -35,7 +39,7 @@ function Horario(props) {
                             <Form.Label
                                     column
                                     md={12}>
-                                        {linha}
+                                        -
                             </Form.Label>
                         </Form.Group>
                     </Card.Body>
@@ -46,13 +50,16 @@ function Horario(props) {
 
     function gerarHorarios(){
         let items = [];
-        let horarios = props.horarios.filter((horario) => (horario.id === props.diaSemana.toString()));
+        let horarios = props.horarios.filter((horario) => (horario.id === (props.diaSemana + 1).toString()));
         if(horarios.length > 0){
             var horarioFinal = horarios[0]['horario_final'];
             var horarioInicial = horarios[0]['horario_inicial'];
             var qtde = (horarioFinal - horarioInicial) / 0.5;
             for(let linha = 1; linha <= qtde; linha++ ){
-                items.push(gerarLinhaHorarios(linha))
+                var aumento = (linha - 1) * 0.5;
+                var hrInicial = parseFloat(aumento) + parseFloat(horarioInicial);
+                var hrFinal = hrInicial + 0.5;
+                items.push(gerarLinhaHorarios(linha, hrInicial, hrFinal))
             }
         }
         return items;
